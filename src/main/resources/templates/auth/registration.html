@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+    <link href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="col-12">
+
+        <div th:if="${param.fail}" class="alert alert-danger">
+            Email already exists!
+        </div>
+
+        <div th:if="${param.success}" class="alert alert-success">
+            Registration successful, please check your email to complete your registration.
+        </div>
+
+        <div class="m-4">User Registration form</div>
+
+        <form method="post" th:action="@{/registration}" th:object="${user}">
+            <div class="mb-3">
+                <label for="exampleInputFirstname" class="form-label">Firstname</label>
+                <input type="text" th:field="*{firstname}"  class="form-control" id="exampleInputFirstname" aria-describedby="firstnameHelp" required autofocus>
+                <div id="firstnameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div style="color: red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputLastname" class="form-label">Lastname</label>
+                <input type="text" th:field="*{lastname}"  class="form-control" id="exampleInputLastname" aria-describedby="lastnameHelp">
+                <div id="lastnameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div style="color: red" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" th:field="*{email}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" th:field="*{password}" class="form-control" id="exampleInputPassword1">
+                <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+
+            <div>
+                <button th:href="@{/register}" type="submit" class="btn btn-secondary">Register</button>
+            </div>
+        </form>
+
+        <div class="mt-4">
+            <span>
+                Registered already?
+                <a th:href="@{/login}">
+                    <button type="button" class="btn btn-black">Login here</button>
+                </a>
+            </span>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

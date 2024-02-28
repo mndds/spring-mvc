@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container col-md-8-offset3 col-md-8 mt-lg-5">
+        <div th:switch="${users}">
+            <h2 th:case="null">There are no users to display</h2>
+            <div th:case="*">
+                <h2>All Users</h2>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.firstname}"></td>
+                        <td th:text="${user.lastname}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td><a href="#">Edit</a></td>
+                        <td><a href="#">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <p>
+            <a th:href="@{/registration}">Add a new User</a>
+        </p>
+
+    </div>
+
+</body>
+</html>
