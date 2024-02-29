@@ -34,6 +34,8 @@ public class User {
 
     private String password;
 
+    private boolean isEnabled = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

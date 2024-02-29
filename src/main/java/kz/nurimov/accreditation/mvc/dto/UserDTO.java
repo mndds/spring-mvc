@@ -1,6 +1,7 @@
 package kz.nurimov.accreditation.mvc.dto;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,8 @@ public class UserDTO {
 
     @Email(message = "Email should be valid")
     private String email;
+
+    private boolean isEnabled = false;
 
     private LocalDateTime createdAt;
 

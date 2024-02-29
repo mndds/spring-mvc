@@ -30,8 +30,8 @@ public class SecurityConfig {
         http.
                 authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                                .requestMatchers("/login", "/registration",
-                                        "/",
+                                .requestMatchers("/login", "/registration/**",
+                                        "/","/error",
                                         "/webjars/**","/css/**", "/js/**").permitAll()
                                 .anyRequest().hasAnyAuthority("USER", "ADMIN"))
                 .formLogin(form -> form

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container col-md-8-offset3 col-md-8 mt-lg-5">
+
+        <div th:if="${param.invalid}" class="col-sm-8">
+            <p class="alert alert-danger">
+                Invalid verification token
+            </p>
+        </div>
+
+        <div th:if="${param.expired}" class="col-sm-8">
+            <p class="alert alert-info">
+                This verification link token has already expired
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>
