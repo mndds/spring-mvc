@@ -4,10 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import java.time.LocalDateTime;
@@ -30,7 +27,7 @@ public class UserDTO {
     @Email(message = "Email should be valid")
     private String email;
 
-    private boolean isEnabled = false;
+    private boolean isEnabled;
 
     private LocalDateTime createdAt;
 

@@ -34,6 +34,12 @@
             </p>
         </div>
 
+        <div th:if="${param.reset_success}" class="col-sm-8">
+            <p class="alert alert-info">
+                Password has been changed
+            </p>
+        </div>
+
 
         <div class="m-4">Login</div>
 
@@ -58,6 +64,8 @@
             <a th:href="@{/registration}">
                 <button  type="button" class="btn btn-primary">Don't have an account already? Register here</button>
             </a>
+            <div class="vr"></div>
+            <span><a th:href="@{/registration/forgot-password}">Forgot password.</a></span>
         </div>
 
 

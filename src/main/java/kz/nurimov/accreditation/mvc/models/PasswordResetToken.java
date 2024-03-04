@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class VerificationToken {
+public class PasswordResetToken {
 
     private static final int EXPIRATION = 60*2; //60*2 =  2 hours
 
@@ -22,13 +23,14 @@ public class VerificationToken {
     private Long id;
 
     private String token;
+
     private Date expirationTime;
 
     @OneToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
-    public VerificationToken(String token, User user) {
+    public PasswordResetToken(String token, User user) {
         this.token = token;
         this.user = user;
         this.expirationTime = calculateExpiryDate(EXPIRATION);

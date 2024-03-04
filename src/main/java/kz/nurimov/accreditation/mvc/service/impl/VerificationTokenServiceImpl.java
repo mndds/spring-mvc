@@ -7,12 +7,12 @@ import kz.nurimov.accreditation.mvc.models.User;
 import kz.nurimov.accreditation.mvc.models.VerificationToken;
 import kz.nurimov.accreditation.mvc.repository.UserRepository;
 import kz.nurimov.accreditation.mvc.repository.VerificationTokenRepository;
+import kz.nurimov.accreditation.mvc.service.RoleService;
 import kz.nurimov.accreditation.mvc.service.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -35,8 +35,10 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     @Override
     public String validateToken(String token) {
         Optional<VerificationToken> verificationToken = tokenRepository.findByToken(token);
-        if (!verificationToken.isPresent()) return "Invalid";
+
         VerificationToken myToken = verificationToken.get();
+
+        if (!verificationToken.isPresent()) return "Invalid";
         if (myToken.getExpirationTime().before(new Date())) return "Expired";
 
         User user = myToken.getUser();

@@ -4,6 +4,8 @@ import kz.nurimov.accreditation.mvc.dto.RegistrationDTO;
 import kz.nurimov.accreditation.mvc.dto.UserDTO;
 import kz.nurimov.accreditation.mvc.models.Role;
 import kz.nurimov.accreditation.mvc.models.User;
+import kz.nurimov.accreditation.mvc.service.RoleService;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -17,17 +19,15 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "roleNames", source = "roles", qualifiedByName = "rolesToRoleNames")
+    @Mapping(target = "isEnabled", expression = "java(user.isEnabled())")
     UserDTO userToUserDTO(User user);
 
     @Mapping(target = "roles", ignore = true)
     User registrationDTOToUser(RegistrationDTO registrationDTO);
 
-    @Mapping(target = "roles", ignore = true) // Игнорируем поле roles, так как оно будет обработано отдельно
-    @Mapping(target = "password", ignore = true) // Предполагается, что пароль не хранится в UserDTO
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "password", ignore = true)
     User userDTOToUser(UserDTO userDto);
-
-//    @Mapping(target = "password", ignore = true)
-//    UserDTO registrationDTOToUserDTO(RegistrationDTO registrationDTO);
 
     @Named("rolesToRoleNames")
     static List<String> rolesToRoleNames(List<Role> roles) {

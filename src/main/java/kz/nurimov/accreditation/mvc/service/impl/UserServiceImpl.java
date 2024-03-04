@@ -8,6 +8,7 @@ import kz.nurimov.accreditation.mvc.models.Role;
 import kz.nurimov.accreditation.mvc.models.User;
 import kz.nurimov.accreditation.mvc.repository.RoleRepository;
 import kz.nurimov.accreditation.mvc.repository.UserRepository;
+import kz.nurimov.accreditation.mvc.service.RoleService;
 import kz.nurimov.accreditation.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,14 +27,14 @@ public class UserServiceImpl implements UserService {
     // Исправить все исключения
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
     }
 
     @Override
@@ -69,8 +69,7 @@ public class UserServiceImpl implements UserService {
         User user = UserMapper.INSTANCE.registrationDTOToUser(registrationDTO);
         user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
-        Role role = roleRepository.findByName("USER")
-                .orElseThrow(() -> new EntityNotFoundException("Not found user role while creating"));
+        Role role = roleService.findByName("USER");
         user.setRoles(Collections.singletonList(role));
 
         User savedUser = userRepository.save(user);
